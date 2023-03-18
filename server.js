@@ -5,10 +5,18 @@ const connectDB = require("./db/db");
 const app = express(); // intiallising express and storing it in variable
 connectDB();
 
+// MIDDLEWARE
+app.use(express.json())
+
 // ROUTES
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("HomePage");
 });
+
+// CREATE TASK
+app.post("/api/tasks", async (req, res) => {
+    res.send("Task Created")
+})
 
 const startServer = async () => {
   try {
