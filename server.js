@@ -1,7 +1,7 @@
 const dotenv = require("dotenv").config(); // to access dotenv file
 const express = require("express");
 const connectDB = require("./db/db");
-const Task = require("./models/taskModel");
+const taskRoute = require("./routes/taskRoute");
 
 const app = express(); // intiallising express and storing it in variable
 connectDB();
@@ -9,31 +9,12 @@ connectDB();
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // need this line to access body form-urlecnoded in postman
+app.use("/api", taskRoute);
 
 // ROUTES
-app.get("/", async (req, res) => {
-  res.send("HomePage");
-});
-
-// CREATE TASK
-app.post("/api/tasks", async (req, res) => {
-  try {
-    const task = await Task.create(req.body);
-    res.status(200).json(task);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// READ DATA
-app.get("/api/tasks", async (req, res) => {
-  try {
-    const tasks = await Task.find();
-    res.status(200).json(tasks);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+// app.get("/", async (req, res) => {
+//   res.send("HomePage");
+// });
 
 const startServer = async () => {
   try {
