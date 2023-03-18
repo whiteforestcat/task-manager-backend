@@ -10,9 +10,16 @@ app.get("/", (req, res) => {
   res.send("HomePage");
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`server runnning on PORT ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();      // connect to MongoDB first before connecting to server
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`server runnning on PORT ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-// mongodb+srv://amir:<password>@cluster0.nsphapy.mongodb.net/?retryWrites=true&w=majority
+startServer();
