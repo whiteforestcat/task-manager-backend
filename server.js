@@ -7,6 +7,7 @@ connectDB();
 
 // MIDDLEWARE
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 // ROUTES
 app.get("/", async (req, res) => {
@@ -15,6 +16,7 @@ app.get("/", async (req, res) => {
 
 // CREATE TASK
 app.post("/api/tasks", async (req, res) => {
+    console.log(req.body)
     res.send("Task Created")
 })
 
