@@ -2,6 +2,7 @@ const dotenv = require("dotenv").config(); // to access dotenv file
 const express = require("express");
 const connectDB = require("./db/db");
 const taskRoute = require("./routes/taskRoute");
+const cors = require("cors");
 
 const app = express(); // intiallising express and storing it in variable
 connectDB();
@@ -9,6 +10,12 @@ connectDB();
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // need this line to access body form-urlecnoded in postman
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  })
+);
+// app.use(cors()) // leaving empty like this enables all websites to access backend
 app.use("/api", taskRoute);
 
 // ROUTES
