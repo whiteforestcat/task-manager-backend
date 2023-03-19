@@ -46,4 +46,26 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask, getTasks, getTask, deleteTask };
+// UPDATE TASK (USING PUT)
+const updateTask = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      // syntax is first arguement is to search, subsequent arguments to update
+      // previous mongoose functions only need to find the id and perform action (read, delete, etc)
+      { _id: req.params.id },
+      req.body,
+      {
+        new: true,
+        runValidators: true, // to run the error message in schema
+      }
+    );
+    if (!task) {
+      return res.status(404).json(`No task with id ${req.params.id}`);
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createTask, getTasks, getTask, deleteTask, updateTask };
