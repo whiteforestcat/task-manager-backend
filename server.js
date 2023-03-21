@@ -10,14 +10,7 @@ connectDB();
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // need this line to access body form-urlecnoded in postman
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://whiteforestcat-mern-task-manager.onrender.com",
-    ],
-  })
-);
+app.use(cors());
 // app.use(cors()) // leaving empty like this enables all websites to access backend
 app.use("/api", taskRoute);
 
